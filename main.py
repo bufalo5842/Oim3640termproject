@@ -1,62 +1,44 @@
-Investments = {
-    "VOO": 10,
-    "QQQ": 13,
-    "VTI": 9.79,
-    "SPY": 10
-    }
+from flask import Flask, render_template, request
 
-def compound_int(P, r, n, t):
+# Create a Flask app
+app = Flask(__name__)
+
+
+@app.route('/', methods=['GET', 'POST'])
+def form():
+    result = None
+    if request.method == 'POST':
+        result = calculate_compound_interest(
+            p=int(request.form['principal']),
+            i=str(request.form['stock']),
+            t=int(request.form['frequency']),
+            n=int(request.form['years'])
+        )
+    # Pass the result to the front end
+    return render_template('userform.html', result=result)
+
+
+def calculate_compound_interest(p: int, i: float, t: int, n: int):
     """
-    Function that calculates compound interest.
+    Calculate compound interest.
+
+    :param p: The principal investment amount.
+    :param i: The annual interest rate (decimal form).
+    :param t: Number of years the money is invested for.
+    :param n: Number of times that interest is compounded per year.
+    :return: The future value of the investment.
     """
-    value = P * (pow((1 + (r/n)), n * t))
-    interest = value - P
-    print("Compounded interest is", interest)
-    print("Initial investment was", P)
-    print("Final value will be", value)
+    if i == "VOO":
+        i = .10
+    elif i == "QQQ":
+        i = .13
+    elif i == "VTI":
+        i = .0979
+    elif i == "SPY":
+        i = .10
+    return p * ((1 + (i / t)) ** (n * t))
 
-def compound_int_prompts():
-    
-    try:
-        principle = int(input('Enter how much you would like to invest: '))
-        #rate = (float(input("Enter expected interest rate (%) ")))/100
-        # What if the input chose the name of the stock one wants to invest in and based on the choice, the rate for that stick is used when
-        # the code runs
-        r_input = (input('From the following options, enter which stock you would like to invest in: VOO, QQQ, VTI,or SPY: ')) 
-        if r_input == 'VOO' or 'voo':
-            rate = 10/100
-        elif r_input == 'QQQ' or 'qqq':
-            rate = 13/100
-        elif r_input == 'VTI' or 'vti':
-            rate = 9.79/100
-        elif r_input == 'SPY' or 'spy':
-            rate = 10/100
-        n_input = (input('Enter your desired compounding period: Daily, monthly, or annually: '))
-        if n_input == 'annually' or 'Annually' or 'ANNUALLY':
-            frequency = 1 
-        elif n_input == 'monthly' or 'Monthly' or 'MONTHLY':
-            frequency = 12
-        elif n_input == 'daily' or 'Daily' or 'MONTHLY':
-            frequency = 365
-        time = float(input('Enter years of investment: '))
 
-    except ValueError:
-        print("Please follow the instructions and enter the correct value.")
-
-    return(principle, rate, frequency, time)
-
-def main():
-    compound_int_prompts()
-
+# Run the Flask app
 if __name__ == '__main__':
-    main()
-
-
-
-
-
-
-
-
-
-
+    app.run(debug=True)
