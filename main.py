@@ -43,9 +43,13 @@ def compound_int_prompts():
     except ValueError:
         print("Please follow the instructions and enter the correct value.")
 
-    return (principle, rate, frequency, time)
+    principle, rate, frequency, time
 
-compound_int_prompts()
+def main():
+    compound_int_prompts()
+
+if __name__ == '__main__':
+    main()
 
 
 
