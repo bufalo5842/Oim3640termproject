@@ -41,7 +41,7 @@ def compound_int_prompts():
         time = float(input('Enter years of investment: '))
 
     except ValueError:
-        print("please type a number")
+        print("Please follow the instructions and enter the correct value.")
 
     return (principle, rate, frequency, time)
 
@@ -56,25 +56,3 @@ compound_int_prompts()
 
 
 
-
-
-# def compound_int_prompts():
-
-#     try:
-#         principle = int(input('Enter initial amount: '))
-#         rate = (float(input("Enter expected interest rate (%) ")))/100
-#         n_input = (input('Enter compounding period (daily, monthly, or annual): '))
-#         if n_input == 'annual':
-#             frequency = 1 
-#         elif n_input == 'monthly':
-#             frequency = 12
-#         elif n_input == 'daily':
-#             frequency = 365
-#         time = float(input('Enter years of investment: '))
-
-#     except ValueError:
-#         print("please type a number")
-
-#     return compound_int(principle, rate, frequency, time)
-
-# compound_int_prompts()
